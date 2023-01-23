@@ -1,3 +1,2 @@
-String som = "(5*5) * (2*5)";
-
-println(som);
+int a = 5 + ((10 * 10) + 50);
+println(a);
