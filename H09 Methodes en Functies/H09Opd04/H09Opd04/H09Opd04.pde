@@ -39,7 +39,6 @@ void setup(){
 }
 
 void draw(){
-  
 }
 
 void Methode1(int x, int y, int z, int a){
