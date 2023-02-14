@@ -1,50 +1,35 @@
-int millisecs;
-int seconds;
-int minutes;
-boolean start = false;
-boolean starter;
+int x = 50;
+int y = 100;
+int z = 150;
+int a = 200;
+boolean begin = false;
+boolean eind;
 
 void setup() {
   size(500, 500);
 }
 
 void draw() {
-  background(0);
-  if (start) {
-    if (int(millis()/100)  % 10 != millisecs) {
-      millisecs++;
-    }
-    if (millisecs >= 10) {
-      millisecs -= 10;
-      seconds++;
-    }
-    if (seconds >= 60) {
-      seconds -= 60;
-      minutes++;
-    }
+  //background(255);
+  if (begin) {
   }
-
-  //view
-  textAlign(CENTER);
-  fill(255);
-  textSize(15);
-  text(nf(minutes, 2) + ":" + nf(seconds, 2) + "." + nf(millisecs, 1), width/2, height/2);
+  if (eind) {
+  }
 }
 
 void mouseClicked() {
-  if (start == false) {
-    starter = true;
+  if (begin == false) {
+    eind = true;
+    line(x, y, mouseX, mouseY);
+    x = mouseX;
+    y = mouseY;
   }
-  if (start == true) {
-    starter = false;
+  if (begin == true) {
+    eind = false;
+    line(mouseX, mouseY, x, y);
   }
-  start = starter;
+  //begin = eind;
 }
-
-void keyPressed() {
-  if (key == ' ') {
-    millisecs = 0;
-    seconds = 0;
-    minutes = 0;
-  }
-}
+/*void mouseDragged() {
+ line(mouseX, mouseY, 50, 50);
+ }*/
