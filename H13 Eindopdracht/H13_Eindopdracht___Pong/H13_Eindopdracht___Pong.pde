@@ -11,8 +11,8 @@ void setup() {
   ball.speedY = random(-3, 3); //snelheid Y-as
   paddlePlayer1 = new Paddle(20, height/2, 10, 150); // tekent de player paddle links
   paddlePlayer2 = new Paddle(width-20, height/2, 10, 150); // tekent de player paddle rechts
-  scoreP1 = new Score(225, 50, 0, 50);
-  scoreP2 = new Score(500, 50, 0, 50);
+  scoreP1 = new Score(225, 50, 0, 50); //laat de score van P1 zien
+  scoreP2 = new Score(500, 50, 0, 50); //laat de score van P2 zien
 }
 
 void draw() {
@@ -27,6 +27,8 @@ void draw() {
   paddlePlayer1.bounce(); // maakt een rand/limiet voor de paddles
   scoreP1.display(); //tekent de score van Player1
   scoreP2.display(); //tekent de score van Player2
+  scoreP1.points(); //telt de score op van P1
+  scoreP2.points(); //telt de score op van P2
 }
 
 class Ball {
@@ -74,26 +76,20 @@ class Ball {
   }
 
   void bounce() {
-    /*if (ball.left() <=0) {
-     ball.speedX = -ball.speedX;
-     }*/
     if (ball.bottom() >= height) {
       ball.speedY = -ball.speedY;
     }
     if (ball.top() <=0) {
       ball.speedY = -ball.speedY;
     }
-    /*if (ball.right() >= width) {
-     ball.speedX = -ball.speedX;
-     }*/
     if (ball.left() < paddlePlayer1.right() && ball.bottom() > paddlePlayer1.top() && ball.top() < paddlePlayer1.bottom()) {
       ball.speedX = -ball.speedX;
     }
     if (ball.right() > paddlePlayer2.left() && ball.bottom() > paddlePlayer2.top() && ball.top() < paddlePlayer2.bottom()) {
-      ball.speedX =-ball.speedX;
+      ball.speedX = -ball.speedX;
     }
   }
-}
+} //eeinde class Ball
 
 class Paddle {
 
@@ -139,6 +135,7 @@ class Paddle {
   float bottom() {
     return y+h/2;
   }
+
   void bounce() {
     if (paddlePlayer1.top() <0) {
       paddlePlayer1.y = paddlePlayer1.h/2;
@@ -151,6 +148,40 @@ class Paddle {
     }
     if (paddlePlayer2.bottom() > height) {
       paddlePlayer2.y = height - paddlePlayer2.h/2;
+    }
+  }
+} //einde class Paddle
+
+class Score {
+  float x;
+  float y;
+  int p;
+  float size;
+  color c;
+
+  //constructor x3
+  Score(float TempX, float TempY, int TempP, float TempSize) {
+    x = TempX;
+    y = TempY;
+    p = TempP;
+    size = TempSize;
+    c =(255);
+  }
+
+  void display() {
+    text("Score " + p, x, y);
+  }
+
+  void points() {
+    if (ball.left() ==0) {
+      scoreP2.p++;
+      ball.x = width/2;
+      ball.speedX =5;
+    }
+    if (ball.right() == width) {
+      scoreP1.p++;
+      ball.x = width/2;
+      ball.speedX= -5;
     }
   }
 }
@@ -170,26 +201,6 @@ void keyPressed() {
   }
 }
 
-class Score {
-  float x;
-  float y;
-  int p;
-  float size;
-  color c;
-
-  //constructor x3
-  Score(float TempX, float TempY, int TempP, float TempSize) {
-    x= TempX;
-    y= TempY;
-    p= TempP;
-    size= TempSize;
-    c =(255);
-  }
-
-  void display() {
-    text("Score " + p, x, y);
-  }
-}
 void keyReleased() {
   if (key == 'w') {
     paddlePlayer1.speedY =0;
